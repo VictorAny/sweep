@@ -9,6 +9,7 @@ from sweepai.config.client import get_description
 from sweepai.config.server import (
     DEFAULT_GPT4_32K_MODEL,
     DEFAULT_GPT35_MODEL,
+    IS_SELF_HOSTED,
 )
 from sweepai.core.entities import Message
 from sweepai.core.prompts import repo_description_prefix_prompt, system_message_prompt
@@ -202,11 +203,14 @@ class ChatGPT(MessageList):
                     logger.info(
                         f"{tickets_count} tickets found in MongoDB, using {model}"
                     )
-                elif purchased_tickets > 0:
+                elif purchased_tickets and purchased_tickets > 0:
                     model = model or self.model
                     logger.info(
                         f"{purchased_tickets} purchased tickets found in MongoDB, using {model}"
                     )
+                elif IS_SELF_HOSTED:
+                    model = model or self.model
+                    logger.info(f"Self-hosted, using {model}")
                 else:
                     model = DEFAULT_GPT35_MODEL
 
