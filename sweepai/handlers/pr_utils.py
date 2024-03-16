@@ -65,7 +65,7 @@ def make_pr(
     human_message = HumanMessagePrompt(
         repo_name=repo_name,
         username=username,
-        repo_description=repo_description.strip(),
+        repo_description=repo_description.strip() if repo_description else "",
         title=title,
         summary=message_summary,
         snippets=snippets,

@@ -74,6 +74,7 @@ def on_comment(
         if pr is None:
             pr = repo.get_pull(pr_number)
         pr_title = pr.title
+        logger.info(f"PR title is {pr_title}, and body is {pr.body}")
         pr_body = (
             pr.body.split("<details>\n<summary><b>🎉 Latest improvements to Sweep:")[0]
             if pr.body
@@ -296,7 +297,7 @@ def on_comment(
                 username=username,
                 title=pr_title,
                 tree=tree,
-                summary=pr_body,
+                summary=pr_body or "",
                 snippets=snippets,
                 # commit_history=commit_history,
                 pr_file_path=pr_file_path,  # may be None
